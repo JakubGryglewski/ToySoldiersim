@@ -61,3 +61,16 @@ std::string simulationengine::GetLogisticsReport() const {
     }
     return m_squad->GenerateLogisticsReport();
 }
+
+Squad* simulationengine::GetSquad() const {
+    return m_squad.get();
+}
+
+void simulationengine::UpdateSimulation() {
+    if (m_status == SimulationStatus::RUNNING && m_squad) {
+
+        for (auto& soldier : m_squad->GetSoldiers()) {
+            soldier->UpdatePosition();
+        }
+    }
+}

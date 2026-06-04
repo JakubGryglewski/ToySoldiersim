@@ -6,36 +6,44 @@ Soldier::Soldier(std::string rank)
 }
 
 std::string Soldier::ExecuteCommand(Command c) {
-    switch(c) {
-    case Command::ATTENTION:
-        m_state = State::AT_ATTENTION;
-        return "[" + m_rank + "] Standing at attention!";
-
-    case Command::AT_EASE:
-        m_state = State::IDLE;
-        return "[" + m_rank + "] At ease.";
-
-    case Command::MARCH:
+    if (c == Command::MARCH) {
         m_state = State::MARCHING;
         return "[" + m_rank + "] Marching forward!";
-
-    case Command::HALT:
-        m_state = State::IDLE;
-        return "[" + m_rank + "] Halted.";
-
-    case Command::LEFT_FACE:
-        return "[" + m_rank + "] Facing left.";
-
-    case Command::RIGHT_FACE:
-        return "[" + m_rank + "] Facing right.";
-
-    case Command::FALL_IN:
-        m_state = State::AT_ATTENTION;
-        return "[" + m_rank + "] Falls in line!";
-
-    default:
-        return "[" + m_rank + "] Command not recognized.";
     }
+    else if (c == Command::HALT) {
+        m_state = State::IDLE;
+        return "[" + m_rank + "] Halting!";
+    }
+    else if (c == Command::ATTENTION) {
+        m_state = State::AT_ATTENTION;
+        return "[" + m_rank + "] Standing at attention!";
+    }
+    else if (c == Command::AT_EASE) {
+        m_state = State::IDLE;
+        return "[" + m_rank + "] At ease.";
+    }
+
+    //  REAKCJA NA ZWROTY
+    else if (c == Command::LEFT_FACE) {
+        // Obrót w lewo (przeciwnie do wskazówek zegara)
+        if (m_direction == Direction::RIGHT) m_direction = Direction::UP;
+        else if (m_direction == Direction::UP)    m_direction = Direction::LEFT;
+        else if (m_direction == Direction::LEFT)  m_direction = Direction::DOWN;
+        else if (m_direction == Direction::DOWN)  m_direction = Direction::RIGHT;
+
+        return "[" + m_rank + "] Turned left.";
+    }
+    else if (c == Command::RIGHT_FACE) {
+        // Obrót w prawo (zgodnie z ruchem wskazówek zegara)
+        if (m_direction == Direction::RIGHT) m_direction = Direction::DOWN;
+        else if (m_direction == Direction::DOWN)  m_direction = Direction::LEFT;
+        else if (m_direction == Direction::LEFT)  m_direction = Direction::UP;
+        else if (m_direction == Direction::UP)    m_direction = Direction::RIGHT;
+
+        return "[" + m_rank + "] Turned right.";
+    }
+
+    return "[" + m_rank + "] Unknown command.";
 }
 
 State Soldier::GetState() const {

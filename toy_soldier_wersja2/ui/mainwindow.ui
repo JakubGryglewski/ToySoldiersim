@@ -141,14 +141,7 @@
      </layout>
     </item>
     <item>
-     <widget class="QWidget" name="simulationBoard" native="true">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-        <horstretch>5</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-     </widget>
+     <widget class="QGraphicsView" name="simulationBoard"/>
     </item>
    </layout>
   </widget>

@@ -28,6 +28,10 @@ public:
     std::vector<std::string> ExecuteBroadcastCommand(Command c);
     std::vector<std::string> ExecuteCommandForRank(Command c, const std::string& targetRank);
     std::string GetLogisticsReport() const;
+    // do pobrania oddziału:
+    Squad* GetSquad() const;
+
+    void UpdateSimulation();
 
 private:
     SimulationStatus m_status;

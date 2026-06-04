@@ -5,9 +5,18 @@ Marksman::Marksman(std::string rank, int ammo)
 
 std::string Marksman::ExecuteCommand(Command c) {
     if (c == Command::LEFT_FACE) {
+
+        Soldier::ExecuteCommand(c);
+
+
         return "[" + m_rank + " - Sniper] Aiming through scope.";
     }
+
     if (c == Command::RIGHT_FACE) {
+
+        Soldier::ExecuteCommand(c);
+
+
         if (m_ammo > 0) {
             m_ammo--;
             return "[" + m_rank + " - Sniper] Firing weapon! Ammo left: " + std::to_string(m_ammo);
@@ -15,6 +24,7 @@ std::string Marksman::ExecuteCommand(Command c) {
             return "[" + m_rank + " - Sniper] Out of ammo! Drawing sidearm.";
         }
     }
+
 
     return Soldier::ExecuteCommand(c);
 }

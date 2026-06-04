@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QGraphicsScene>
 #include "simulationengine.h"
 
 QT_BEGIN_NAMESPACE
@@ -25,6 +26,8 @@ private slots:
 private:
     Ui::MainWindow *ui;
     simulationengine m_engine;
+
+    QGraphicsScene *scene;
 
     void updateInterface();
 };

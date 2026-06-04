@@ -18,6 +18,9 @@ public:
 
     std::string GenerateLogisticsReport() const;
 
+
+    const std::vector<std::unique_ptr<ISoldier>>& GetSoldiers() const { return m_soldiers; }
+
 private:
     std::string m_name;
     std::vector<std::unique_ptr<ISoldier>> m_soldiers;

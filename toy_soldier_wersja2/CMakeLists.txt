@@ -33,6 +33,7 @@ add_executable(toy_soldier
     mainwindow.cpp
     ui/mainwindow.ui
     ui/icons.qrc
+    soldieritem.h soldieritem.cpp
 )
 
 target_link_libraries(toy_soldier PRIVATE toy_soldier_core Qt6::Widgets)

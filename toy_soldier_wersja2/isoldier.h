@@ -13,6 +13,10 @@ public:
     virtual std::string ExecuteCommand(Command c) = 0;
     virtual State GetState() const = 0;
     virtual std::string GetRank() const = 0;
+    virtual int GetX() const = 0;
+    virtual int GetY() const = 0;
+    virtual void SetPosition(int x, int y) = 0;
+    virtual void UpdatePosition() = 0;
 };
 
 #endif // ISOLDIER_H
