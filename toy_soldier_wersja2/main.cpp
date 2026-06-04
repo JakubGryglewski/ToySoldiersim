@@ -1,61 +1,46 @@
 #include <iostream>
 #include <memory>
-#include <vector>
-#include "simulationengine.h"
+#include "squad.h"
 #include "soldier.h"
 #include "marksman.h"
 #include "medic.h"
 
-void PrintLogs(const std::vector<std::string>& logs) {
-    for (const auto& log : logs) {
-        std::cout << log << "\n";
-    }
-}
-
 int main() {
-    std::cout << "=== MILITARY SIMULATION ENGINE TEST ===\n\n";
+    std::cout << "=== MILITARY SIMULATION START ===\n\n";
 
-    // Tworzenie głównego silnika (backend aplikacji)
-    simulationengine engine;
+    // 1.  kontener-zarządca (Oddział Alfa)
+    Squad alphaSquad("Alpha Strike Team");
 
-    // Próba wydania rozkazu przed uruchomieniem symulacji (nie zadziała)
-    PrintLogs(engine.ExecuteBroadcastCommand(Command::ATTENTION));
+    // podstawowi żołnierze (Soldier)
+    alphaSquad.AddSoldier(std::make_unique<Soldier>("Private"));
+    alphaSquad.AddSoldier(std::make_unique<Soldier>("Sergeant"));
 
-    // Inicjalizacja oddziału z poziomu silnika
-    engine.CreateSquad("Alpha Strike Team");
-    engine.AddSoldierToSquad(std::make_unique<Soldier>("Private"));
-    engine.AddSoldierToSquad(std::make_unique<Soldier>("Sergeant"));
-    engine.AddSoldierToSquad(std::make_unique<Marksman>("Private", 2));
-    engine.AddSoldierToSquad(std::make_unique<Medic>("Lieutenant", 2));
+    // 3.  Strzelcy Wyborowi (Marksman) - 2 sztuki amunicji
+    alphaSquad.AddSoldier(std::make_unique<Marksman>("Private", 2));
+    alphaSquad.AddSoldier(std::make_unique<Marksman>("Corporal", 2));
 
-    // Uruchamianie symulacji
-    std::cout << "\n[SYSTEM] Uruchamiam symulacje...\n";
-    engine.Start();
+    // 4.  Medyk (Medic) -  2 apteczki
+    alphaSquad.AddSoldier(std::make_unique<Medic>("Private", 2));
+    alphaSquad.AddSoldier(std::make_unique<Medic>("Lieutenant", 2));
 
-    // Testy poprawnego działania
-    std::cout << engine.GetLogisticsReport() << "\n";
-    PrintLogs(engine.ExecuteBroadcastCommand(Command::FALL_IN));
+    // TEST 1: Zestawienie logistyczne kontenera (Nasza mapa w akcji - zliczanie rang)
+    alphaSquad.PrintLogisticsReport();
 
-    // Zatrzymywanie symulacji
-    std::cout << "\n[SYSTEM] Pauzuje symulacje...\n";
-    engine.Pause();
+    // TEST 2: Rozkaz dla całego oddziału (Wszyscy idą do szeregu, potem maszerują)
+    alphaSquad.BroadcastCommand(Command::FALL_IN);
+    alphaSquad.BroadcastCommand(Command::MARCH);
 
-    // Próba wydania rozkazu po spauzowaniu symulacji (nie zadziała)
-    PrintLogs(engine.ExecuteBroadcastCommand(Command::MARCH));
+    // TEST 3: Polimorfizm przy zwrotach (Snajperzy celują z lunety, reszta zwykle się obraca)
+    alphaSquad.BroadcastCommand(Command::LEFT_FACE);
 
-    // Wznowienie syumlacji
-    std::cout << "\n[SYSTEM] Wznawiam symulacje...\n";
-    engine.Start();
+    // TEST 4: Kolejny zwrot (Snajperom skończy się amunicja, więc wyciągają broń boczną)
+    alphaSquad.BroadcastCommand(Command::RIGHT_FACE);
 
-    // Ten rozkaz zadziała
-    PrintLogs(engine.ExecuteBroadcastCommand(Command::MARCH));
+    // TEST 5: Filtracja rangi (Rozkaz "Spocznij" trafia TYLKO do rangi "Private")
+    // Zwykły szeregowy odpocznie, snajper odpocznie, a Medyk-Private zacznie leczyć!
+    // Porucznik i kapral zignorują ten rozkaz, bo ranga się nie zgadza.
+    alphaSquad.IssueCommandToRank(Command::AT_EASE, "Private");
 
-    // Zakończenie symulacji
-    std::cout << "\n=== MILITARY SIMULATION ENGINE END ===\n";
-    engine.Stop();
-
-    // Próba wydania rozkazu po zakończeniu symulacji (nie zadziała)
-    PrintLogs(engine.ExecuteBroadcastCommand(Command::MARCH));
-
+    std::cout << "\n=== MILITARY SIMULATION END ===\n";
     return 0;
 }

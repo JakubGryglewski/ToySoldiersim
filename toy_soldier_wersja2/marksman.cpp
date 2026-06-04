@@ -1,20 +1,24 @@
 #include "marksman.h"
+#include <iostream>
 
 Marksman::Marksman(std::string rank, int ammo)
-    : Soldier(rank), m_ammo(ammo) {}
+: Soldier(rank), m_ammo(ammo) {
+}
 
-std::string Marksman::ExecuteCommand(Command c) {
-    if (c == Command::LEFT_FACE) {
-        return "[" + m_rank + " - Sniper] Aiming through scope.";
-    }
-    if (c == Command::RIGHT_FACE) {
+void Marksman::ExecuteCommand(Command c) {
+
+    if (c == Command::LEFT_FACE || c == Command::RIGHT_FACE) {
         if (m_ammo > 0) {
             m_ammo--;
-            return "[" + m_rank + " - Sniper] Firing weapon! Ammo left: " + std::to_string(m_ammo);
+            std::cout << "[" << m_rank << " - Marksman] Aiming through scope! Ammo left: " << m_ammo << "\n"; // "Celuje przez optyke! Pozostala amunicja: "
+            m_state = State::AT_ATTENTION;
         } else {
-            return "[" + m_rank + " - Sniper] Out of ammo! Drawing sidearm.";
+            std::cout << "[" << m_rank << " - Marksman] Out of ammo! Switching to sidearm.\n"; // "Brak amunicji! Przechodze na bron boczna."
+            m_state = State::AT_ATTENTION;
         }
     }
 
-    return Soldier::ExecuteCommand(c);
+    else {
+        Soldier::ExecuteCommand(c);
+    }
 }
