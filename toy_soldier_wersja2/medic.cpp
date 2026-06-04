@@ -1,27 +1,17 @@
 #include "medic.h"
-#include <iostream>
-
 
 Medic::Medic(std::string rank, int medkits)
-    : Soldier(rank), m_medkits(medkits) {
-}
+    : Soldier(rank), m_medkits(medkits) {}
 
-void Medic::ExecuteCommand(Command c) {
-
+std::string Medic::ExecuteCommand(Command c) {
     if (c == Command::AT_EASE) {
-        m_state = State::IDLE;
-
         if (m_medkits > 0) {
             m_medkits--;
-
-            std::cout << "[" << m_rank << " - Medic] Healing squad members! Medkits left: " << m_medkits << "\n";
+            return "[" + m_rank + " - Medic] Healing squad members! Medkits left: " + std::to_string(m_medkits);
         } else {
-
-            std::cout << "[" << m_rank << " - Medic] Out of medical supplies!\n";
+            return "[" + m_rank + " - Medic] Out of medkits!";
         }
     }
 
-    else {
-        Soldier::ExecuteCommand(c);
-    }
+    return Soldier::ExecuteCommand(c);
 }

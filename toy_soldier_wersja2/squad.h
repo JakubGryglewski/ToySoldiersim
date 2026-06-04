@@ -1,6 +1,5 @@
- #ifndef SQUAD_H
+#ifndef SQUAD_H
 #define SQUAD_H
-
 
 #include <vector>
 #include <memory>
@@ -14,21 +13,14 @@ public:
 
     void AddSoldier(std::unique_ptr<ISoldier> soldier);
 
-    void BroadcastCommand(Command c);
+    std::vector<std::string> BroadcastCommand(Command c);
+    std::vector<std::string> IssueCommandToRank(Command c, const std::string& targetRank);
 
-    void IssueCommandToRank(Command c, const std::string& targetRank);
-
-
-    //size_t GetSize() const;
-
-
-    void PrintLogisticsReport() const;
+    std::string GenerateLogisticsReport() const;
 
 private:
     std::string m_name;
-
     std::vector<std::unique_ptr<ISoldier>> m_soldiers;
-
 };
 
 #endif // SQUAD_H

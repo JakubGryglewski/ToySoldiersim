@@ -8,8 +8,7 @@ class Medic : public Soldier
 public:
     Medic(std::string rank, int medkits = 3);
 
-    void ExecuteCommand(Command c) override;
-
+    std::string ExecuteCommand(Command c) override;
 
 private:
     int m_medkits;

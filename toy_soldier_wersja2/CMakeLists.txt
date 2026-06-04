@@ -5,15 +5,40 @@ project(toy_soldier LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_executable(toy_soldier main.cpp
-    soldier.h soldier.cpp
-    squad.h squad.cpp
-    calculationengine.h calculationengine.cpp
+# 1. KONFIGURACJA ŚRODOWISKA Qt
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
+
+set(CMAKE_AUTOUIC_SEARCH_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ui")
+
+find_package(Qt6 COMPONENTS Widgets REQUIRED)
+
+# 2. BIBLIOTEKA LOGIKI (BACKEND)
+add_library(toy_soldier_core
     isoldier.h
+    soldier.h soldier.cpp
     marksman.h marksman.cpp
     medic.h medic.cpp
+    squad.h squad.cpp
+    simulationengine.h simulationengine.cpp
 )
 
+target_link_libraries(toy_soldier_core PRIVATE Qt6::Widgets)
+
+# 3. GŁÓWNA APLIKACJA (FRONTEND / GUI)
+add_executable(toy_soldier
+    main.cpp
+    mainwindow.h
+    mainwindow.cpp
+    ui/mainwindow.ui
+    ui/icons.qrc
+)
+
+target_link_libraries(toy_soldier PRIVATE toy_soldier_core Qt6::Widgets)
+target_link_libraries(toy_soldier PRIVATE toy_soldier_core Qt6::Widgets)
+
+# 4. INSTALACJA
 include(GNUInstallDirs)
 install(TARGETS toy_soldier
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
