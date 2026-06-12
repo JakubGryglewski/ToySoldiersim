@@ -18,7 +18,7 @@ void SoldierItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
 
     QColor armyColor = Qt::green;
 
-    // 2.
+
     if (m_soldier) {
         std::string rank = m_soldier->GetRank();
         if (rank == "Lieutenant") {

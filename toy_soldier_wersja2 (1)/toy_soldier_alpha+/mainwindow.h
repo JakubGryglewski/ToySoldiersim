@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QGraphicsScene>
+#include <QTimer>
 #include "simulationengine.h"
 
 QT_BEGIN_NAMESPACE
@@ -22,15 +23,18 @@ private slots:
     void on_btnPause_clicked();
     void on_btnStop_clicked();
     void on_btnStep_clicked();
+    void on_btnReset_clicked();
 
 
     void onFormationChanged();
+    void onCommandChanged();
 
 private:
     Ui::MainWindow *ui;
     simulationengine m_engine;
 
     QGraphicsScene *scene;
+    QTimer *simulationTimer;
 
     void updateInterface();
     void applyFormation();
