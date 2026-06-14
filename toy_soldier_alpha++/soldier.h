@@ -25,6 +25,12 @@ public:
             case Direction::DOWN:  m_y += 10; break;
             case Direction::UP:    m_y -= 10; break;
             }
+
+            if (m_x < 30) m_x = 30;
+            if (m_x > 1650) m_x = 1650;
+
+            if (m_y < 30) m_y = 30;
+            if (m_y > 950) m_y = 950;
         }
     }
 

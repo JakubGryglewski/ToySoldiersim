@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // - INICJALIZACJA SCENY GRAFICZNEJ
     scene = new QGraphicsScene(this);
-    scene->setSceneRect(0, 0, 800, 600);
+    scene->setSceneRect(0, 0, 1700, 1000);
     ui->simulationBoard->setScene(scene);
 
     // SILNIK
@@ -28,6 +28,10 @@ MainWindow::MainWindow(QWidget *parent)
     m_engine.AddSoldierToSquad(std::make_unique<Medic>("Corporal", 3));
 
     Squad* mySquad = m_engine.GetSquad();
+
+    if (mySquad && !mySquad->GetSoldiers().empty()) {
+        mySquad->GetSoldiers()[0]->SetPosition(700, 500);
+    }
 
     if (mySquad) {
         const auto& soldiers = mySquad->GetSoldiers();
@@ -197,7 +201,7 @@ void MainWindow::on_btnReset_clicked() {
 
     Squad* mySquad = m_engine.GetSquad();
     if (mySquad && !mySquad->GetSoldiers().empty()) {
-        mySquad->GetSoldiers()[0]->SetPosition(150, 150);
+        mySquad->GetSoldiers()[0]->SetPosition(700, 500);
     }
 
 
