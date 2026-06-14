@@ -1,0 +1,9 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>assets/pause.svg</file>
+    <file>assets/reset.svg</file>
+    <file>assets/run.svg</file>
+    <file>assets/step.svg</file>
+    <file>assets/stop.svg</file>
+  </qresource>
+</RCC>
